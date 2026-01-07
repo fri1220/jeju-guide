@@ -172,6 +172,7 @@
             margin-top: 10px;
             box-shadow: 0 4px 6px rgba(0,102,204,0.3);
             transition: all 0.2s;
+            cursor: pointer;
         }
         
         .btn:hover {
@@ -287,7 +288,7 @@
             <strong>推薦地點：</strong>
             <br>
             <a href="https://m.place.naver.com/place/1930715370/home" 
-               onclick="openNaverMap(event, 'SK텔레콤', this.href)" 
+               onclick="openNaverMap(event, '1930715370', this.href)" 
                class="btn" 
                target="_blank">📍 打開 Naver Map 位置</a>
         </div>
@@ -390,8 +391,7 @@
                 <figure>
                     <img src="8.jpeg" alt="JEONG dream 名片">
                 </figure>
-                <p>✅ <strong>會中文</strong> (WeChat fkiller55)</p>
-            </div>
+                </div>
 
             <div class="info-card">
                 <h3>Somang Real Estate (소망부동산)</h3>
@@ -463,11 +463,12 @@
     </footer>
 
     <script>
-    function openNaverMap(e, query, webUrl) {
-        e.preventDefault(); // 暫時阻止直接打開網頁
+    function openNaverMap(e, placeId, webUrl) {
+        e.preventDefault(); // 阻止直接打開網頁
 
-        // 設定 App 的開啟連結 (搜尋模式，使用 SK Telecom 為關鍵字)
-        var appUrl = "nmap://search?query=" + encodeURIComponent(query) + "&appname=JejuGuide";
+        // 使用 Naver Map 的 Place URI Scheme (支援 iOS/Android)
+        // 格式: nmap://place?id={PlaceID}
+        var appUrl = "nmap://place?id=" + placeId + "&appname=JejuGuide";
 
         // 記錄當下時間
         var start = new Date().getTime();
