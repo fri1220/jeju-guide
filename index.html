@@ -286,7 +286,10 @@
         <div class="info-card" style="border-left: 5px solid #17a2b8;">
             <strong>推薦地點：</strong>
             <br>
-            <a href="https://m.place.naver.com/place/1930715370/home" class="btn" target="_blank">📍 打開 Naver Map 位置</a>
+            <a href="https://m.place.naver.com/place/1930715370/home" 
+               onclick="openNaverMap(event, 'SK텔레콤', this.href)" 
+               class="btn" 
+               target="_blank">📍 打開 Naver Map 位置</a>
         </div>
 
         <h3>📌 實體卡重要規定</h3>
@@ -415,7 +418,7 @@
         <p><strong>丟垃圾時間：</strong> 下午 15:00 ~ 隔日凌晨 04:00</p>
         
         <figure>
-            <img src="9.jpeg" alt="濟州垃圾分類詳細圖表">
+            <img src="9.JPEG" alt="濟州垃圾分類詳細圖表">
             <figcaption>詳細分類規則與回收日曆（請長按保存）</figcaption>
         </figure>
 
@@ -459,7 +462,29 @@
         <p>Living in Jeju - Quick Start Guide</p>
     </footer>
 
+    <script>
+    function openNaverMap(e, query, webUrl) {
+        e.preventDefault(); // 暫時阻止直接打開網頁
+
+        // 設定 App 的開啟連結 (搜尋模式，使用 SK Telecom 為關鍵字)
+        var appUrl = "nmap://search?query=" + encodeURIComponent(query) + "&appname=JejuGuide";
+
+        // 記錄當下時間
+        var start = new Date().getTime();
+
+        // 嘗試打開 App
+        window.location.href = appUrl;
+
+        // 設定一個計時器 (500毫秒)
+        // 如果 App 成功打開，瀏覽器會進入背景，計時器會暫停
+        // 如果 App 沒打開，計時器時間到就會執行 -> 跳轉去網頁版
+        setTimeout(function() {
+            var end = new Date().getTime();
+            if (end - start < 1500) { // 判斷是否還留在目前頁面
+                window.location.href = webUrl; // 打不開 App，改去網頁版
+            }
+        }, 500);
+    }
+    </script>
 </body>
-
 </html>
-
