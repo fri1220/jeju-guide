@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>濟州新同事生活快速指南</title>
+    <style>
+        :root {
+            /* 濟州風格配色 */
+            --primary-blue: #0066cc;
+            --ocean-gradient: linear-gradient(135deg, #00c6fb 0%, #005bea 100%);
+            --text-dark: #2c3e50;
+            --bg-light: #f4f7f6;
+            --white: #ffffff;
+            --warning-bg: #fff3cd;
+            --warning-text: #856404;
+        }
+
+        body {
+            font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            max-width: 210mm; /* A4 寬度 */
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+        }
+
+        /* --- 1. 美化後的 Header --- */
+        .header-hero {
+            background: var(--ocean-gradient);
+            color: var(--white);
+            padding: 50px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 91, 234, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-hero h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            letter-spacing: 1px;
+            border: none;
+            color: white;
+            padding-bottom: 0;
+        }
+
+        .header-hero .subtitle {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-top: 10px;
+            display: block;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .header-hero .welcome-msg {
+            margin-top: 25px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- 2. 標題樣式 --- */
+        h2 {
+            color: var(--primary-blue);
+            font-size: 1.8em;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 5px solid var(--primary-blue);
+            padding-left: 15px;
+            background: linear-gradient(to right, #f8f9fa, #fff);
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #005bea;
+            font-size: 1.3em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            border-bottom: 1px dashed #ddd;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        /* --- 3. 資訊卡片元件 --- */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .highlight-box {
+            background-color: #e3f2fd;
+            border-left: 5px solid var(--primary-blue);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+
+        /* --- 4. 清單與按鈕 --- */
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+
+        .checklist li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: 900;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0,102,204,0.3);
+            transition: all 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #004494;
+            transform: scale(1.02);
+            color: white;
+        }
+
+        /* --- 5. 圖片樣式 --- */
+        figure {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+
+        /* 特別針對 eSIM 圖片縮小 */
+        .img-small {
+            max-width: 50% !important; 
+            margin: 0 auto;
+            display: block;
+        }
+
+        figcaption {
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .phrase-box {
+            border: 2px dashed var(--primary-blue);
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 12px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .step-card {
+            background: #fdfdfd;
+            border-left: 4px solid var(--primary-blue);
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        /* 列印優化 */
+        @media print {
+            body { padding: 0; margin: 0; max-width: 100%; }
+            .header-hero { background: #eee !important; color: #000 !important; box-shadow: none; border: 1px solid #ccc; }
+            .header-hero .welcome-msg { background: none; color: #000; }
+            .btn { border: 1px solid #000; color: #000; background: none; box-shadow: none; }
+            .page-break { page-break-before: always; }
+            a { text-decoration: underline; color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-hero">
+        <h1>濟州新同事生活快速指南</h1>
+        <span class="subtitle">First Days in Jeju</span>
+        <div class="welcome-msg">
+            歡迎加入我們！為了讓你剛抵達濟州的生活更順利，我們整理了這份包含通訊、交通、居住與生活採買的實用手冊。祝你在濟州展開美好的新旅程！✨
+        </div>
+    </header>
+
+    <section>
+        <h2>🚀 抵達後 48 小時必做清單</h2>
+        <div class="checklist">
+            <ul>
+                <li><strong>準備韓元現金</strong>：銀行帳戶無法立即開通，建議初期攜帶足夠的現金以支付生活開銷。</li>
+                <li><strong>辦理手機 SIM 卡</strong>：持有外國護照即可辦理預付卡，這是聯繫與開戶的基礎。</li>
+                <li><strong>下載地圖 App</strong>：Google Maps 在韓國不太好用！請務必下載：
+                    <br>📍 <strong>Naver Map</strong> (有簡體中文版) 或 <strong>KakaoMap</strong> (有英文版)
+                    <br><small>💡 提示：大部分地址仍建議使用韓文輸入搜尋最準確。</small>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>📱 手機 SIM 卡申辦</h2>
+        
+        <div class="highlight-box">
+            <h3>💡 推薦方式：線上購買 eSIM</h3>
+            <p>若您的手機支援 eSIM，建議可直接在 Trip.com 等網站購買，掃碼即用，省去跑通訊行的麻煩。</p>
+            
+            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-top: 10px; margin-bottom: 20px;">
+                <strong>⚠️ 購買前必做：檢查手機是否支援</strong>
+                <p>請在手機撥號介面輸入：<span style="font-size: 1.2em; font-weight: bold; font-family: monospace; background: #eee; padding: 2px 5px; border-radius: 4px;">*#06#</span></p>
+                <p>👉 如果畫面出現 <strong>EID</strong> (eSIM Identifier) 資訊，就代表硬體支援 eSIM。</p>
+            </div>
+
+            <figure>
+                <img src="1.jpeg" alt="韓國 eSIM 方案參考" class="img-small">
+                <figcaption>Trip.com 上的 eSIM 方案參考示意</figcaption>
+            </figure>
+        </div>
+
+        <h3>🏪 實體通訊行（持護照辦理）</h3>
+        <p>若需要實體卡，這間通訊社可以登記辦預付卡，有會中文的職員協助。</p>
+        
+        <div class="info-card" style="border-left: 5px solid #17a2b8;">
+            <strong>推薦地點：</strong>
+            <br>
+            <a href="https://m.place.naver.com/place/1930715370/home" class="btn" target="_blank">📍 打開 Naver Map 位置</a>
+        </div>
+
+        <h3>📌 實體卡重要規定</h3>
+        <div class="checklist">
+            <ul>
+                <li><strong>推薦方案</strong>：3 個月 7 萬韓元預付 SIM 卡（出國後再次入境韓國仍可繼續使用）。</li>
+                <li><strong>續用方式</strong>：超過 3 個月後，只要充值就能繼續使用。</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ 非常重要的出入境規則：</strong>
+            <ul>
+                <li>如果您在辦卡後<strong>出國（離開韓國）</strong>，必須在 <strong>1 個月內</strong> 回到韓國。</li>
+                <li><strong>重新入境時</strong>，必須「主動聯絡」電信公司，通知啟用 SIM 卡，否則可能會失效。</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>💳 WOWPASS：你的初期理財幫手</h2>
+        
+        <div class="card-container">
+            <div class="info-card">
+                <h3>它是什麼？</h3>
+                <p>WOWPASS 是一種在韓國常用的預付卡，非常適合剛到濟州、尚未開戶的外籍同事。</p>
+                <p>✅ <strong>功能</strong>：日常消費刷卡、搭乘大眾交通（T-money）、換匯。</p>
+                <p>❌ <strong>限制</strong>：它是短期生活工具，<strong>不能完全取代</strong>正式的韓國銀行帳戶。</p>
+            </div>
+            
+            <div class="info-card" style="background-color: #fcfcfc;">
+                <h3>📝 使用流程</h3>
+                <div class="step-card">1️⃣ 下載 WOWPASS App 並完成註冊（使用護照即可）</div>
+                <div class="step-card">2️⃣ 在機場或市區機台領取實體卡片</div>
+                <div class="step-card">3️⃣ 透過機台或 App 進行儲值與換匯</div>
+                <div class="step-card">4️⃣ 直接在商店刷卡或搭乘公車地鐵</div>
+                <div class="step-card">5️⃣ 待銀行帳戶開通後，可逐步改用本地銀行帳戶</div>
+                <a href="https://wowpass.io/zh-TW" class="btn" target="_blank" style="margin-top: 15px;">前往 WOWPASS 官網</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>🛒 日常生活採買</h2>
+        <div class="card-container">
+            <div class="info-card">
+                <h3>Daiso (大創)</h3>
+                <p>💰 <strong>最便宜、品項多</strong><br>適合購買剛搬家需要的各種生活雜貨、收納用品、廚房小物。</p>
+            </div>
+            <div class="info-card">
+                <h3>Emart / Lotte Mart</h3>
+                <p>🏪 <strong>大型超市</strong><br>適合購買生鮮食品、大型家電或大量採購日用品。</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <section>
+        <h2>🏠 住宿與租屋聯絡人</h2>
+        <p>以下是常用的房屋仲介與相關聯絡人資訊：</p>
+
+        <div class="card-container">
+            <div class="info-card">
+                <h3>今日不動產 (오늘부동산)</h3>
+                <p><strong>金敬蘭 (Kim Kyung-ran)</strong></p>
+                <figure>
+                    <img src="5.jpeg" alt="金敬蘭 WeChat QR Code">
+                    <figcaption>請掃描 QR Code 加好友</figcaption>
+                </figure>
+                <p><small>來源參考：房屋中介的金小姐</small></p>
+            </div>
+
+            <div class="info-card">
+                <h3>Cathery</h3>
+                <p>WeChat ID: <strong>choishinying</strong></p>
+                <figure>
+                    <img src="6.jpeg" alt="Cathery WeChat Profile">
+                </figure>
+                <p>✅ <strong>會中文</strong></p>
+            </div>
+
+            <div class="info-card">
+                <h3>濟州島不動產</h3>
+                <p><strong>李經理</strong></p>
+                <p>WeChat ID: <strong>Jifangdi8</strong></p>
+                <figure>
+                    <img src="7.jpeg" alt="李經理 WeChat Profile">
+                </figure>
+                <p>✅ <strong>會中文</strong></p>
+            </div>
+
+            <div class="info-card">
+                <h3>JEONG dream (정드림)</h3>
+                <p><strong>高永柱 (Ko Young-ju)</strong></p>
+                <p>Email: fkiller22@nate.com</p>
+                <p>WeChat ID: <strong>fkiller55</strong></p>
+                <figure>
+                    <img src="8.jpeg" alt="JEONG dream 名片">
+                </figure>
+                <p>✅ <strong>會中文</strong> (WeChat fkiller55)</p>
+            </div>
+
+            <div class="info-card">
+                <h3>Somang Real Estate (소망부동산)</h3>
+                <p>電話: <strong>010-3106-2460</strong></p>
+                <p style="color: #d32f2f;">⚠️ <strong>注意：這位只能用韓語溝通</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-break"></div>
+
+    <section>
+        <h2>♻️ 垃圾分類與丟棄指南</h2>
+        <div class="warning-box">
+            <p><strong>這在濟州非常重要！</strong></p>
+            <ol>
+                <li>垃圾一定要分類（一般、廚餘、回收）。</li>
+                <li>必須使用「指定的垃圾袋」（一般袋子不能丟）。</li>
+                <li>沒照規定分類或亂丟，可能會被罰款（約 100 萬韓元以下）。</li>
+            </ol>
+        </div>
+
+        <h3>📅 分類規則與時間</h3>
+        <p><strong>丟垃圾時間：</strong> 下午 15:00 ~ 隔日凌晨 04:00</p>
+        
+        <figure>
+            <img src="9.JPEG" alt="濟州垃圾分類詳細圖表">
+            <figcaption>詳細分類規則與回收日曆（請長按保存）</figcaption>
+        </figure>
+
+        <figure>
+            <img src="10.jpeg" alt="濟州垃圾回收站實景">
+            <figcaption>路邊常見的垃圾分類回收站（Clean House）</figcaption>
+        </figure>
+
+        <h3>🛍 如何購買專用垃圾袋？</h3>
+        <p>一般垃圾（白色袋子）和食物垃圾袋需要在<strong>便利商店 (GS25, CU, 7-11)</strong> 或 <strong>超市</strong> 購買。</p>
+        
+        <div class="phrase-box">
+            <p>💡 <strong>給店員看這句 (或跟著唸)：</strong></p>
+            <span style="font-size: 1.4em; font-weight: bold; color: var(--primary-blue);">20 리터 종량제 봉투 주세요.</span>
+            <p style="color: #666; font-size: 0.9em; margin-top: 5px;">(i-ship-li-teo jong-nyang-je bong-tu ju-se-yo)</p>
+            <p><strong>中文意思：</strong>請給我 20 公升的專用垃圾袋。</p>
+        </div>
+
+        <div class="info-card" style="background-color: #f0f8ff;">
+            <strong>容量建議：</strong>
+            <ul>
+                <li><strong>10L</strong>：適合 1 人短住。</li>
+                <li><strong>20L</strong>：最普遍，最多人買。</li>
+                <li><strong>50L</strong>：適合多人合住或大掃除。</li>
+            </ul>
+        </div>
+
+        <div class="card-container">
+            <figure class="info-card">
+                <img src="11.jpeg" alt="濟州專用垃圾袋實物照片">
+                <figcaption>認明這種白色的專用垃圾袋</figcaption>
+            </figure>
+            <figure class="info-card">
+                <img src="12.jpeg" alt="垃圾袋參考價格表">
+                <figcaption>各容量垃圾袋參考價格 (韓元)</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <footer style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.8em; color: #999;">
+        <p>Living in Jeju - Quick Start Guide</p>
+    </footer>
+
+</body>
+</html>
