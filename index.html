@@ -1,492 +1,746 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>濟州新同事生活快速指南</title>
     <style>
+        /* --- 基礎設定 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
         :root {
-            /* 濟州風格配色 */
             --primary-blue: #0066cc;
             --ocean-gradient: linear-gradient(135deg, #00c6fb 0%, #005bea 100%);
             --text-dark: #2c3e50;
             --bg-light: #f4f7f6;
             --white: #ffffff;
             --warning-bg: #fff3cd;
-            --warning-text: #856404;
+            --danger-bg: #ffebee;
+            --danger-border: #ef5350;
+            --highlight-border: #ff9800; /* 新增退宿提醒的顏色 */
+            --highlight-bg: #fff3e0;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
-            line-height: 1.7;
-            color: var(--text-dark);
-            max-width: 210mm; /* A4 寬度 */
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #fff;
-        }
-
-        /* --- 1. 美化後的 Header --- */
-        .header-hero {
-            background: var(--ocean-gradient);
-            color: var(--white);
-            padding: 50px 30px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0, 91, 234, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header-hero h1 {
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
             margin: 0;
-            font-size: 2.8em;
-            font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            letter-spacing: 1px;
-            border: none;
-            color: white;
-            padding-bottom: 0;
-        }
-
-        .header-hero .subtitle {
-            font-size: 1.4em;
-            font-weight: 300;
-            opacity: 0.95;
-            margin-top: 10px;
-            display: block;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .header-hero .welcome-msg {
-            margin-top: 25px;
-            font-size: 1.1em;
+            padding: 0;
+            background-color: #f0f2f5; /* 網頁背景色 */
+            color: #333;
+            /* 字體放大設定：基礎字體設為 20px (原本約 16px) */
+            font-size: 20px; 
             line-height: 1.6;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 12px;
-            backdrop-filter: blur(5px);
         }
 
-        /* --- 2. 標題樣式 --- */
+        /* --- 一頁式容器設定 --- */
+        .main-container {
+            max-width: 900px; /* 限制最大寬度，電腦版看比較舒服 */
+            margin: 0 auto;
+            background: white;
+            padding: 40px 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        /* --- 標題樣式 (配合字體放大) --- */
+        h1 { font-size: 2.2em; margin-bottom: 0.2em; }
         h2 {
             color: var(--primary-blue);
-            font-size: 1.8em;
-            margin-top: 50px;
-            margin-bottom: 20px;
+            font-size: 1.6em;
+            margin: 40px 0 20px 0;
+            border-left: 8px solid var(--primary-blue);
+            padding-left: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-left: 5px solid var(--primary-blue);
-            padding-left: 15px;
-            background: linear-gradient(to right, #f8f9fa, #fff);
-            padding-top: 10px;
-            padding-bottom: 10px;
         }
-        
         h3 {
             color: #005bea;
             font-size: 1.3em;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-weight: 600;
-            border-bottom: 1px dashed #ddd;
-            padding-bottom: 5px;
-            display: inline-block;
+            margin: 25px 0 15px 0;
+            font-weight: 700;
         }
 
-        /* --- 3. 資訊卡片元件 --- */
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        p, li {
+            margin-bottom: 10px;
         }
+
+        /* --- Header --- */
+        .header-hero {
+            background: var(--ocean-gradient);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header-hero .subtitle { display: block; margin-top: 10px; opacity: 0.9; font-size: 1.2em; }
+        .header-hero .welcome-msg { 
+            background: rgba(255,255,255,0.2); 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin-top: 25px; 
+            font-size: 1em; 
+            text-align: left;
+        }
+
+        /* --- 元件樣式 --- */
+        
+        /* Checklist */
+        .checklist ul { list-style: none; padding-left: 0; }
+        .checklist li { position: relative; padding-left: 35px; margin-bottom: 12px; }
+        .checklist li::before { 
+            content: '✔'; 
+            position: absolute; 
+            left: 0; 
+            color: var(--primary-blue); 
+            font-weight: bold; 
+            font-size: 1.2em;
+        }
+
+        /* 卡片與容器 */
+        .card-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .card-container.half > div { flex: 1; min-width: 300px; } /* 手機版自動換行 */
 
         .info-card {
-            background: var(--white);
+            background: white;
             border: 1px solid #eee;
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .highlight-box {
             background-color: #e3f2fd;
-            border-left: 5px solid var(--primary-blue);
-            padding: 20px;
-            border-radius: 0 8px 8px 0;
-            margin: 20px 0;
+            border: 2px dashed var(--primary-blue);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
         }
 
         .warning-box {
             background-color: var(--warning-bg);
-            color: var(--warning-text);
             padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 5px solid #ffc107;
+            border-radius: 12px;
+            border-left: 6px solid #ffc107;
+            margin-bottom: 20px;
         }
 
-        /* --- 4. 清單與按鈕 --- */
-        .checklist ul {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .checklist li {
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 12px;
-            font-size: 1.05em;
+        .danger-box {
+            background-color: var(--danger-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 6px solid var(--danger-border);
+            margin-bottom: 20px;
         }
 
-        .checklist li::before {
-            content: '✔';
-            position: absolute;
-            left: 0;
-            color: var(--primary-blue);
-            font-weight: 900;
-            font-size: 1.2em;
+        /* 新增：退宿提醒專用樣式 */
+        .checkout-box {
+            background-color: var(--highlight-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 3px solid var(--highlight-border);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.1);
+        }
+        .checkout-box h3 {
+            color: #e65100;
+            border-bottom: 2px dashed #ffb74d;
+            padding-bottom: 10px;
+            margin-top: 0;
         }
 
-        .btn {
+        /* 按鈕 */
+        .btn-link {
             display: inline-block;
             background-color: var(--primary-blue);
-            color: white;
-            padding: 10px 20px;
+            color: white !important;
             text-decoration: none;
-            border-radius: 50px;
+            padding: 12px 30px;
+            border-radius: 30px;
             font-weight: bold;
-            font-size: 0.95em;
             margin-top: 10px;
-            box-shadow: 0 4px 6px rgba(0,102,204,0.3);
-            transition: all 0.2s;
+            border: none;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn-link:hover { transform: scale(1.05); }
+
+        /* 圖片處理 */
+        .img-container { text-align: center; margin: 20px 0; }
+        .img-container img { 
+            max-width: 100%; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
         }
         
-        .btn:hover {
-            background-color: #004494;
-            transform: scale(1.02);
-            color: white;
+        .mobile-screenshot {
+            max-height: 550px; /* 稍微放大 */
+            width: auto;
+            object-fit: contain;
         }
 
-        /* --- 5. 圖片樣式 --- */
-        figure {
-            margin: 25px 0;
-            text-align: center;
-        }
-
-        img {
-            max-width: 100%;
+        .landscape-img {
+            width: 100%;
             height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #eee;
         }
 
-        /* 特別針對 eSIM 圖片縮小 */
-        .img-small {
-            max-width: 50% !important; 
-            margin: 0 auto;
-            display: block;
+        /* 房仲 Grid */
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自動適應寬度 */
+            gap: 20px;
         }
 
-        figcaption {
-            margin-top: 10px;
-            color: #666;
-            font-size: 0.9em;
-            font-style: italic;
-        }
-
-        .phrase-box {
-            border: 2px dashed var(--primary-blue);
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 12px;
-            margin: 15px 0;
-            text-align: center;
-        }
-
-        .step-card {
-            background: #fdfdfd;
-            border-left: 4px solid var(--primary-blue);
+        /* 步驟方塊 */
+        .step-box {
+            background: #fff;
+            border-left: 5px solid var(--primary-blue);
+            padding: 10px 15px;
             margin-bottom: 10px;
-            padding: 12px 15px;
-            border-radius: 0 4px 4px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            font-weight: 500;
         }
 
-        /* 列印優化 */
-        @media print {
-            body { padding: 0; margin: 0; max-width: 100%; }
-            .header-hero { background: #eee !important; color: #000 !important; box-shadow: none; border: 1px solid #ccc; }
-            .header-hero .welcome-msg { background: none; color: #000; }
-            .btn { border: 1px solid #000; color: #000; background: none; box-shadow: none; }
-            .page-break { page-break-before: always; }
-            a { text-decoration: underline; color: #000; }
+        /* 表格樣式 */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .custom-table th, .custom-table td {
+            border: 1px solid #ddd;
+            padding: 15px; /* 表格內距加大 */
+            text-align: left;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            color: var(--text-dark);
+            font-weight: bold;
+        }
+        .custom-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* 手機版優化 */
+        @media (max-width: 600px) {
+            body { font-size: 18px; } /* 手機版字稍微縮一點點但還是要大 */
+            .main-container { padding: 20px 15px; width: 100%; }
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.4em; }
+            .card-container.half { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <header class="header-hero">
-        <h1>濟州新同事生活快速指南</h1>
-        <span class="subtitle">First Days in Jeju</span>
-        <div class="welcome-msg">
-            歡迎加入我們！為了讓你剛抵達濟州的生活更順利，我們整理了這份包含通訊、交通、居住與生活採買的實用手冊。祝你在濟州展開美好的新旅程！✨
-        </div>
-    </header>
+    <div class="main-container">
+        <header class="header-hero">
+            <h1>濟州新同事生活快速指南</h1>
+            <span class="subtitle">First Days in Jeju</span>
+            <div class="welcome-msg">
+                歡迎加入我們！為了讓你剛抵達濟州的生活更順利，我們整理了這份包含通訊、交通、居住與生活採買的實用手冊。祝你在濟州展開美好的新旅程！✨
+            </div>
+        </header>
 
-    <section>
-        <h2>🚀 抵達後 48 小時必做清單</h2>
-        <div class="checklist">
-            <ul>
-                <li><strong>準備韓元現金</strong>：銀行帳戶無法立即開通，建議初期攜帶足夠的現金以支付生活開銷。</li>
-                <li><strong>辦理手機 SIM 卡</strong>：持有外國護照即可辦理預付卡，這是聯繫與開戶的基礎。</li>
-                <li><strong>下載地圖 App</strong>：Google Maps 在韓國不太好用！請務必下載：
-                    <br>📍 <strong>Naver Map</strong> (有簡體中文版) 或 <strong>KakaoMap</strong> (有英文版)
-                    <br><small>💡 提示：大部分地址仍建議使用韓文輸入搜尋最準確。</small>
-                </li>
-            </ul>
-        </div>
-    </section>
+        <section>
+            <h2>🚀 行前準備</h2>
+            <div class="checklist">
+                <ul>
+                    <li><strong>準備韓元現金</strong>：銀行帳戶無法立即開通，建議初期攜帶足夠的現金以支付生活開銷。</li>
+                    <li><strong>辦理手機 SIM 卡</strong>：持有外國護照即可辦理預付卡，這是聯繫與開戶的基礎。</li>
+                    <li><strong>下載地圖 App</strong>：Google Maps 在韓國不太好用！請務必下載：
+                        <br>📍 <strong>Naver Map</strong> (有簡體中文版) 或 <strong>KakaoMap</strong> (有英文版)
+                    </li>
+                </ul>
+            </div>
+        </section>
 
-    <section>
-        <h2>📱 手機 SIM 卡申辦</h2>
-        
-        <div class="highlight-box">
-            <h3>💡 推薦方式：線上購買 eSIM</h3>
-            <p>若您的手機支援 eSIM，建議可直接在 Trip.com 等網站購買，掃碼即用，省去跑通訊行的麻煩。</p>
-            
-            <div style="background: white; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-top: 10px; margin-bottom: 20px;">
-                <strong>⚠️ 購買前必做：檢查手機是否支援</strong>
-                <p>請在手機撥號介面輸入：<span style="font-size: 1.2em; font-weight: bold; font-family: monospace; background: #eee; padding: 2px 5px; border-radius: 4px;">*#06#</span></p>
-                <p>👉 如果畫面出現 <strong>EID</strong> (eSIM Identifier) 資訊，就代表硬體支援 eSIM。</p>
+        <section>
+            <h2>📱 手機 SIM 卡申辦</h2>
+            <div class="highlight-box">
+                <h3>💡 推薦方式：線上購買 eSIM</h3>
+                <p>若您的手機支援 eSIM，建議可直接在 Trip.com 等網站購買，掃碼即用。</p>
+                <div style="background: white; padding: 15px; border-radius: 8px; border: 1px dashed #ccc; margin-bottom: 15px;">
+                    <strong>⚠️ 購買前檢查：</strong>
+                    撥號輸入 <code>*#06#</code>，若出現 <strong>EID</strong> 即支援。
+                </div>
+                
+                <div class="img-container">
+                    <img src="./1.jpeg" alt="eSIM 方案" class="mobile-screenshot">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🏥 實體通訊行 (持護照辦理)</h2>
+            <p>若需要實體卡，這間通訊社可以登記辦預付卡，有會中文的職員協助。</p>
+            <div class="info-card" style="border-left: 8px solid #17a2b8; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                <span><strong>推薦地點：</strong></span>
+                <a href="https://m.place.naver.com/place/1930715370/home" target="_blank" class="btn-link">📍 打開 Naver Map 位置</a>
             </div>
 
-            <figure>
-                <img src="1.jpeg" alt="韓國 eSIM 方案參考" class="img-small">
-                <figcaption>Trip.com 上的 eSIM 方案參考示意</figcaption>
-            </figure>
-        </div>
-
-        <h3>🏪 實體通訊行（持護照辦理）</h3>
-        <p>若需要實體卡，這間通訊社可以登記辦預付卡，有會中文的職員協助。</p>
-        
-        <div class="info-card" style="border-left: 5px solid #17a2b8;">
-            <strong>推薦地點：</strong>
-            <br>
-            <a href="https://m.place.naver.com/place/1930715370/home" 
-               onclick="openNaverMap(event, '1930715370', this.href)" 
-               class="btn" 
-               target="_blank">📍 打開 Naver Map 位置</a>
-        </div>
-
-        <h3>📌 實體卡重要規定</h3>
-        <div class="checklist">
-            <ul>
-                <li><strong>推薦方案</strong>：3 個月 7 萬韓元預付 SIM 卡（出國後再次入境韓國仍可繼續使用）。</li>
-                <li><strong>續用方式</strong>：超過 3 個月後，只要充值就能繼續使用。</li>
-            </ul>
-        </div>
-
-        <div class="warning-box">
-            <strong>⚠️ 非常重要的出入境規則：</strong>
-            <ul>
-                <li>如果您在辦卡後<strong>出國（離開韓國）</strong>，必須在 <strong>1 個月內</strong> 回到韓國。</li>
-                <li><strong>重新入境時</strong>，必須「主動聯絡」電信公司，通知啟用 SIM 卡，否則可能會失效。</li>
-            </ul>
-        </div>
-    </section>
-
-    <section>
-        <h2>💳 WOWPASS：你的初期理財幫手</h2>
-        
-        <div class="card-container">
-            <div class="info-card">
-                <h3>它是什麼？</h3>
-                <p>WOWPASS 是一種在韓國常用的預付卡，非常適合剛到濟州、尚未開戶的外籍同事。</p>
-                <p>✅ <strong>功能</strong>：日常消費刷卡、搭乘大眾交通（T-money）、換匯。</p>
-                <p>❌ <strong>限制</strong>：它是短期生活工具，<strong>不能完全取代</strong>正式的韓國銀行帳戶。</p>
+            <h3>📌 實體卡重要規定</h3>
+            <div class="checklist">
+                <ul>
+                    <li><strong>推薦方案</strong>：3 個月 7 萬韓元預付 SIM 卡（出國後再次入境韓國仍可繼續使用）。</li>
+                    <li><strong>續用方式</strong>：超過 3 個月後，只要充值就能繼續使用。</li>
+                </ul>
             </div>
-            
-            <div class="info-card" style="background-color: #fcfcfc;">
-                <h3>📝 使用流程</h3>
-                <div class="step-card">1️⃣ 下載 WOWPASS App 並完成註冊（使用護照即可）</div>
-                <div class="step-card">2️⃣ 在機場或市區機台領取實體卡片</div>
-                <div class="step-card">3️⃣ 透過機台或 App 進行儲值與換匯</div>
-                <div class="step-card">4️⃣ 直接在商店刷卡或搭乘公車地鐵</div>
-                <div class="step-card">5️⃣ 待銀行帳戶開通後，可逐步改用本地銀行帳戶</div>
-                <a href="https://wowpass.io/zh-TW" class="btn" target="_blank" style="margin-top: 15px;">前往 WOWPASS 官網</a>
+            <div class="warning-box">
+                <strong>⚠️ 非常重要的出入境規則：</strong>
+                <ul>
+                    <li>如果您在辦卡後<strong>出國（離開韓國）</strong>，必須在 <strong>1 個月內</strong> 回到韓國。</li>
+                    <li><strong>重新入境時</strong>，必須「主動聯絡」電信公司，通知啟用 SIM 卡，否則可能會失效。</li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h2>🛒 日常生活採買</h2>
-        <div class="card-container">
-            <div class="info-card">
-                <h3>Daiso (大創)</h3>
-                <p>💰 <strong>最便宜、品項多</strong><br>適合購買剛搬家需要的各種生活雜貨、收納用品、廚房小物。</p>
+        <section>
+            <h2>💳 WOWPASS：你的初期理財幫手</h2>
+            <div class="card-container half">
+                <div class="info-card">
+                    <h3>它是什麼？</h3>
+                    <p>WOWPASS 是一種在韓國常用的預付卡，非常適合剛到濟州的外籍同事。</p>
+                    <ul style="padding-left: 20px;">
+                        <li>✅ <strong>功能</strong>：日常消費刷卡、搭乘大眾交通（T-money）、換匯。</li>
+                        <li>❌ <strong>限制</strong>：不能完全取代正式的韓國銀行帳戶。</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card" style="background-color: #fcfcfc;">
+                    <h3>📝 使用流程</h3>
+                    <div class="step-box">1️⃣ 下載 App 並註冊 (護照)</div>
+                    <div class="step-box">2️⃣ 機場/市區機台領卡</div>
+                    <div class="step-box">3️⃣ 機台或 App 儲值換匯</div>
+                    <div class="step-box">4️⃣ 直接刷卡或搭公車</div>
+                    <div class="step-box">5️⃣ 待銀行開戶後可轉出</div>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <a href="https://wowpass.io/zh-TW" target="_blank" class="btn-link">前往 WOWPASS 官網</a>
+                    </div>
+                </div>
             </div>
-            <div class="info-card">
-                <h3>Emart / Lotte Mart</h3>
-                <p>🏪 <strong>大型超市</strong><br>適合購買生鮮食品、大型家電或大量採購日用品。</p>
+        </section>
+
+        <section>
+            <h2>🛒 日常生活採買</h2>
+            <div class="card-container half">
+                <div class="info-card">
+                    <h3 style="margin-top:0;">Daiso (大創)</h3>
+                    <p>💰 <strong>最便宜、品項多</strong><br>適合購買生活雜貨、收納用品。</p>
+                </div>
+                <div class="info-card">
+                    <h3 style="margin-top:0;">Emart / Lotte Mart</h3>
+                    <p>🏪 <strong>大型超市</strong><br>適合買生鮮、家電或大量採購。</p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <div class="page-break"></div>
+        <section>
+            <h2>🏠 住宿與租屋聯絡人</h2>
+            <p>以下是常用的房屋仲介與相關聯絡人資訊 (截圖來源：手機通訊錄/WeChat)：</p>
 
-    <section>
-        <h2>🏠 住宿與租屋聯絡人</h2>
-        <p>以下是常用的房屋仲介與相關聯絡人資訊：</p>
-
-        <div class="card-container">
-            <div class="info-card">
-                <h3>今日不動產 (오늘부동산)</h3>
-                <p><strong>金敬蘭 (Kim Kyung-ran)</strong></p>
-                <figure>
-                    <img src="5.jpeg" alt="金敬蘭 WeChat QR Code">
-                    <figcaption>請掃描 QR Code 加好友</figcaption>
-                </figure>
-                <p><small>來源參考：房屋中介的金小姐</small></p>
-            </div>
-
-            <div class="info-card">
-                <h3>Cathery</h3>
-                <p>WeChat ID: <strong>choishinying</strong></p>
-                <figure>
-                    <img src="6.jpeg" alt="Cathery WeChat Profile">
-                </figure>
-                <p>✅ <strong>會中文</strong></p>
-            </div>
-
-            <div class="info-card">
-                <h3>濟州島不動產</h3>
-                <p><strong>李經理</strong></p>
-                <p>WeChat ID: <strong>Jifangdi8</strong></p>
-                <figure>
-                    <img src="7.jpeg" alt="李經理 WeChat Profile">
-                </figure>
-                <p>✅ <strong>會中文</strong></p>
-            </div>
-
-            <div class="info-card">
-                <h3>JEONG dream (정드림)</h3>
-                <p><strong>高永柱 (Ko Young-ju)</strong></p>
-                <p>Email: fkiller22@nate.com</p>
-                <p>WeChat ID: <strong>fkiller55</strong></p>
-                <figure>
-                    <img src="8.jpeg" alt="JEONG dream 名片">
-                </figure>
+            <div class="agent-grid">
+                <div class="info-card">
+                    <h3>今日不動產</h3>
+                    <p>金敬蘭 (Kim Kyung-ran)</p>
+                    <div class="img-container">
+                        <img src="./5.jpeg" alt="金敬蘭" class="mobile-screenshot" style="max-height: 400px;">
+                    </div>
                 </div>
 
-            <div class="info-card">
-                <h3>Somang Real Estate (소망부동산)</h3>
-                <p>電話: <strong>010-3106-2460</strong></p>
-                <p style="color: #d32f2f;">⚠️ <strong>注意：這位只能用韓語溝通</strong></p>
+                <div class="info-card">
+                    <h3>Cathery</h3>
+                    <p>WeChat: choishinying   會中文</p>
+                    <div class="img-container">
+                        <img src="./6.jpeg" alt="Cathery" class="mobile-screenshot" style="max-height: 400px;">
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>濟州島不動產</h3>
+                    <p>李經理 (WeChat: Jifangdi8)   會中文</p>
+                    <div class="img-container">
+                        <img src="./7.jpeg" alt="李經理" class="mobile-screenshot" style="max-height: 400px;">
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>JEONG dream</h3>
+                    <p>高永柱 (Ko Young-ju)</p>
+                    <div class="img-container">
+                        <img src="./8.jpeg" alt="JEONG dream" class="mobile-screenshot" style="max-height: 400px;">
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
 
-    <div class="page-break"></div>
+            <div class="info-card" style="margin-top: 20px;">
+                <h3>Somang Real Estate (소망부동산)</h3>
+                <p>電話: <strong>010-3106-2460</strong> <span style="color: #d32f2f; margin-left: 10px;">⚠️ 注意：這位只能用韓語溝通</span></p>
+            </div>
 
-    <section>
-        <h2>♻️ 垃圾分類與丟棄指南</h2>
-        <div class="warning-box">
-            <p><strong>這在濟州非常重要！</strong></p>
-            <ol>
-                <li>垃圾一定要分類（一般、廚餘、回收）。</li>
-                <li>必須使用「指定的垃圾袋」（一般袋子不能丟）。</li>
-                <li>沒照規定分類或亂丟，可能會被罰款（約 100 萬韓元以下）。</li>
-            </ol>
-        </div>
+            <div class="checkout-box">
+                <h3>🏠 宿舍退宿前整理小提醒</h3>
+                <p>為了讓下一位同事能舒適入住，退宿前請協助完成以下簡單整理事項：</p>
+                <div class="checklist">
+                    <ul>
+                        <li>🧻 <strong>補齊廁紙</strong></li>
+                        <li>🛏️ <strong>清洗床鋪用品</strong>（床單、被套、枕套等）</li>
+                        <li>🧹 <strong>完成基本宿舍清潔</strong>：
+                            <ul style="margin-top: 5px; font-size: 0.9em; color: #555;">
+                                <li>地面簡單清理</li>
+                                <li>浴室與馬桶清潔</li>
+                                <li>廚房／流理台整理</li>
+                                <li>垃圾清走</li>
+                            </ul>
+                        </li>
+                        <li>🎒 <strong>帶走所有私人物品</strong></li>
+                    </ul>
+                </div>
+                <hr style="border: 0; border-top: 2px dashed #ffcc80; margin: 15px 0;">
+                <p style="text-align: center; font-weight: bold; color: #e65100;">
+                    請將宿舍整理至「可供下一位住戶正常使用」的狀態。<br>謝謝您的配合與體諒！
+                </p>
+            </div>
+            </section>
 
-        <h3>📅 分類規則與時間</h3>
-        <p><strong>丟垃圾時間：</strong> 下午 15:00 ~ 隔日凌晨 04:00</p>
+        <section>
+            <h2>♻️ 垃圾分類與丟棄指南</h2>
+            <div class="warning-box">
+                <p><strong>這在濟州非常重要！</strong></p>
+                <ol style="margin-bottom:0;">
+                    <li>垃圾一定要分類（一般、廚餘、回收）。</li>
+                    <li>必須使用「指定的垃圾袋」（一般袋子不能丟）。</li>
+                    <li>亂丟垃圾可能會被罰款 (約 100 萬韓元以下)。</li>
+                </ol>
+            </div>
+
+            <h3>📅 分類規則與時間</h3>
+            <p><strong>丟垃圾時間：</strong> 下午 15:00 ~ 隔日凌晨 04:00</p>
+            
+            <div class="img-container">
+                <img src="./9.jpeg" alt="垃圾分類詳細表" class="landscape-img" style="border: 2px solid #eee;">
+            </div>
+            
+            <p style="text-align: center; color: #666; font-size: 0.8em; margin-top: -5px;">▲ 濟州垃圾分類詳細圖表</p>
+
+            <div class="img-container" style="margin-top: 30px;">
+                <img src="./10.jpeg" alt="回收站實景" class="landscape-img" style="max-height: 500px; object-fit: cover;">
+            </div>
+            <p style="text-align: center; color: #666; font-size: 0.8em; margin-top: -5px;">▲ 路邊常見的垃圾分類回收站 (Clean House)</p>
+        </section>
+
+        <section>
+            <h2>🛍 如何購買專用垃圾袋？</h2>
+            <p>一般垃圾（白色袋子）和食物垃圾袋需要在 <strong>便利商店 (GS25, CU, 7-11)</strong> 或 <strong>超市</strong> 購買。</p>
+            
+            <div class="highlight-box" style="text-align: center; border: 3px dashed var(--primary-blue); background: #fdfdfd;">
+                <p>💡 <strong>給店員看這句 (或跟著唸)：</strong></p>
+                <div style="font-size: 1.8em; font-weight: bold; color: var(--primary-blue); margin: 15px 0;">
+                    20 리터 종량제 봉투 주세요.
+                </div>
+                <p style="color: #666; font-size: 0.9em;">(i-ship-li-teo jong-nyang-je bong-tu ju-se-yo)</p>
+                <p><strong>中文意思：</strong>請給我 20 公升的專用垃圾袋。</p>
+            </div>
+
+            <div class="info-card" style="margin-top: 25px; background-color: #f0f8ff;">
+                <strong>容量建議：</strong>
+                <ul style="display: flex; gap: 30px; list-style: none; padding: 0; margin: 10px 0 0 0;">
+                    <li>🔹 <strong>10L</strong>：1 人短住</li>
+                    <li>🔹 <strong>20L</strong>：最普遍</li>
+                    <li>🔹 <strong>50L</strong>：多人合住</li>
+                </ul>
+            </div>
+
+            <div class="card-container half" style="margin-top: 30px;">
+                <div class="info-card" style="text-align: center;">
+                    <img src="./11.jpeg" alt="垃圾袋照片" style="max-width: 100%; height: auto; max-height: 350px;">
+                    <p style="font-size: 0.8em; color: #666;">認明這種白色的專用垃圾袋</p>
+                </div>
+                
+                <div class="info-card" style="text-align: center;">
+                    <img src="./12.jpeg" alt="價格表" style="max-width: 100%; height: auto; max-height: 350px;">
+                    <p style="font-size: 0.8em; color: #666;">各容量垃圾袋參考價格</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📍 主要地點與距離概覽</h2>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>路線</th>
+                        <th>距離 (約)</th>
+                        <th>備註</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Casino → 濟州機場</td>
+                        <td>4 km</td>
+                        <td>車程約 12 分鐘</td>
+                    </tr>
+                    <tr>
+                        <td>Casino → 臨時辦公室</td>
+                        <td>1.3 km</td>
+                        <td>走路 23 分鐘</td>
+                    </tr>
+                    <tr>
+                        <td>Casino → 濟州漢拿醫院</td>
+                        <td>6-6.5 km</td>
+                        <td>車程約 18-20 分鐘</td>
+                    </tr>
+                    <tr>
+                        <td>Casino → 東門市場</td>
+                        <td>1.5 km</td>
+                        <td>走路 25 分鐘</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 30px;">🏢 重要地址 (供導航使用)</h3>
+            <div class="card-container half">
+                <div class="info-card">
+                    <strong>臨時辦公室</strong>
+                    <p>제주 제주시 서사로 31, 4층</p>
+                </div>
+                <div class="info-card">
+                    <strong>公司賭場</strong>
+                    <p>제주 제주시 탑동로 66</p>
+                </div>
+                <div class="info-card">
+                    <strong>濟州漢拿醫院</strong>
+                    <p>제주 제주시 도령로 65 한라병원</p>
+                </div>
+                <div class="info-card">
+                    <strong>東門市場</strong>
+                    <p>제주 제주시 동문로 16</p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 40px;">
+            <h2>🏠 宿舍入住必讀 (嚴格執行)</h2>
+            <div class="danger-box">
+                <h3 style="color: #c62828; margin-top: 0;">🚫 禁菸及禁止攜帶寵物</h3>
+                <ul>
+                    <li><strong>建築物全區嚴禁吸菸</strong>，任何室內空間皆不得吸菸。</li>
+                    <li><strong>禁止攜帶或飼養任何寵物</strong>進入建築物內（包含短期寄放或朋友帶入）。</li>
+                </ul>
+                <hr style="border: 0; border-top: 1px dashed #ef5350; margin: 15px 0;">
+                <p><strong>⚠️ 如違反規定之嚴重後果：</strong></p>
+                <ul>
+                    <li>因吸菸或寵物造成之污染、異味或損害，<strong>員工自行負責清潔、修復及相關費用</strong>。</li>
+                    <li>房東有權解除租賃契約，公司亦有權要求員工<strong>立即退宿</strong>。</li>
+                    <li>員工須賠償房東及相關損失。</li>
+                </ul>
+                <p style="font-weight: bold; margin-top: 10px;">📌 公司不負擔任何因違規行為所產生之費用與責任。</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🤧 醫療與感冒指南</h2>
+            <div class="info-card">
+                <h3>給外國同事的小提醒</h3>
+                <ul>
+                    <li><strong>就醫習慣</strong>：在韓國，感冒通常直接去診所（clinic）看診，不用一開始就去大醫院。</li>
+                    <li><strong>語言問題</strong>：很多診所英文能力有限，但看感冒、發燒、喉嚨痛等通常溝通沒問題。</li>
+                    <li><strong>地圖搜尋關鍵字</strong>：
+                        <br>• 內科：<code>내과</code>
+                        <br>• 耳鼻喉科 (感冒常去)：<code>이비인후과</code>
+                    </li>
+                    <li><strong>流程</strong>：多數診所可直接 walk-in 不需預約 → 看完診後 → 拿處方籤到附近藥局 (약국) 領藥。</li>
+                </ul>
+            </div>
+
+            <h3 style="margin-top: 30px;">🗣️ 看感冒常用韓文 (可直接給醫師看)</h3>
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">韓文</th>
+                        <th>中文意思</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>감기에 걸렸어요</td><td>我感冒了</td></tr>
+                    <tr><td>열이 있어요</td><td>我有發燒</td></tr>
+                    <tr><td>목이 아파요</td><td>喉嚨痛</td></tr>
+                    <tr><td>기침이 나요</td><td>咳嗽</td></tr>
+                    <tr><td>콧물이 나요</td><td>流鼻水</td></tr>
+                    <tr><td>머리가 아파요</td><td>頭痛</td></tr>
+                    <tr><td>며칠 됐어요</td><td>已經好幾天了</td></tr>
+                    <tr><td>약을 먹고 있어요</td><td>我正在吃藥</td></tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h3 style="margin-top: 0;">🌐 翻譯小工具 (臨時很有用)</h3>
+                <ul>
+                    <li><strong>ChatGPT</strong>：可直接輸入症狀，請它翻成韓文。</li>
+                    <li><strong>Google 翻譯</strong>：支援語音與即時翻譯。</li>
+                    <li><strong>Papago (Naver)</strong>：韓文翻譯準確度最高，非常推薦下載。</li>
+                </ul>
+            </div>
+
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>💡 用藥小提醒：</strong>
+                韓國的感冒藥效通常偏強，若不舒服可向藥師說明。若高燒不退或症狀嚴重，請回診或前往大型醫院。
+            </div>
+        </section>
+
+        <section>
+            <h2>🔥 地暖與熱水系統快速教學</h2>
+            <p>韓國住宅的地暖 (온돌) 與熱水 (온수) 通常由同一個面板操作。冬天主要用地暖，日常洗澡則使用熱水模式。</p>
+            
+            <div class="img-container">
+                <img src="./13.jpeg" alt="地暖控制器" style="max-height: 400px;">
+            </div>
+
+            <h3>🎛️ 控制面板中韓對照表</h3>
+            <table class="custom-table">
+                <thead>
+                    <tr><th>韓文</th><th>中文意思</th><th>功能說明</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>온돌 / 난방</strong></td><td>地暖 / 暖房</td><td>地板加熱，冬天保暖主要來源</td></tr>
+                    <tr><td><strong>온수</strong></td><td>熱水</td><td>洗澡、洗手用熱水 (需開啟)</td></tr>
+                    <tr><td><strong>전원</strong></td><td>電源</td><td>系統開關</td></tr>
+                    <tr><td><strong>온도 (▲/▼)</strong></td><td>溫度調整</td><td>設定目標溫度</td></tr>
+                    <tr><td><strong>외출</strong></td><td>外出模式</td><td>不在家時開啟，保持低溫省電</td></tr>
+                    <tr><td><strong>실내</strong></td><td>室內</td><td>顯示目前室內溫度</td></tr>
+                </tbody>
+            </table>
+
+            <div class="card-container half">
+                <div class="info-card">
+                    <h3 style="margin-top:0;">🔥 地暖怎麼用？</h3>
+                    <div class="step-box">1. 開啟電源 (전원)</div>
+                    <div class="step-box">2. 選擇 온돌 或 난방</div>
+                    <div class="step-box">3. 設定溫度 (建議 20–22°C)</div>
+                    <p style="font-size:0.8em; color:#666;">📌 地板先熱，空氣後熱是正常的，請耐心等待。</p>
+                </div>
+                <div class="info-card">
+                    <h3 style="margin-top:0;">🚿 熱水怎麼用？</h3>
+                    <div class="step-box">1. 確認 온수 (熱水) 模式已開啟</div>
+                    <div class="step-box">2. 打開水龍頭，等 10-30 秒</div>
+                    <div class="step-box">3. 若忽冷忽熱，微調水量</div>
+                    <p style="font-size:0.8em; color:#666;">📌 長時間不用熱水，可關閉此功能省電。</p>
+                </div>
+            </div>
+
+            <div class="warning-box" style="margin-top: 15px;">
+                <strong>✅ 新手使用建議：</strong>
+                不要一開始就調很高溫 (20–22°C 已很足夠)。如果覺得室內太熱或地板燙腳，請立即調低溫度，不要馬上開窗浪費能源。
+            </div>
+        </section>
+
+        <section>
+            <h2>🚕 在濟州搭計程車 (Taxi)</h2>
+            <p>濟州計程車方便便宜。大多數司機英文有限，建議使用 App 或直接出示韓文地址。</p>
+
+            <div class="highlight-box">
+                <h3 style="margin-top:0;">📱 必備 App: Kakao T</h3>
+                <p>韓國版 Uber，可直接輸入英文目的地，車資依跳錶，不用擔心議價問題。<strong>建議第一天就安裝！</strong></p>
+            </div>
+
+            <h3 style="margin-top: 20px;">🗣️ 搭車實用韓文</h3>
+            <table class="custom-table">
+                <tbody><tr><td><strong>請帶我去這裡</strong></td><td>여기로 가 주세요</td></tr>
+                <tr><td><strong>請到這個地址</strong></td><td>이 주소로 가 주세요</td></tr>
+                <tr><td><strong>請在這裡下車</strong></td><td>여기서 내려 주세요</td></tr>
+                <tr><td><strong>可以刷卡嗎？</strong></td><td>카드 돼요?</td></tr>
+            </tbody></table>
+
+            <div class="info-card">
+                <strong>🗺️ 給司機看地址的小技巧：</strong>
+                <ol style="margin-bottom:0; padding-left: 20px;">
+                    <li>直接給司機看手機備忘錄的韓文地址。</li>
+                    <li>打開 Naver Map 點「前往」→「汽車」，給司機看導航畫面。</li>
+                    <li>使用 Papago 翻譯：「請帶我去這個地址」。</li>
+                </ol>
+            </div>
+        </section>
         
-        <figure>
-            <img src="9.jpeg" alt="濟州垃圾分類詳細圖表">
-            <figcaption>詳細分類規則與回收日曆（請長按保存）</figcaption>
-        </figure>
+        <hr style="border: 0; border-top: 2px dashed #ccc; margin: 40px 0;">
 
-        <figure>
-            <img src="10.jpeg" alt="濟州垃圾回收站實景">
-            <figcaption>路邊常見的垃圾分類回收站（Clean House）</figcaption>
-        </figure>
+        <section>
+            <h2>🚌 在濟州搭巴士 (Bus)</h2>
+            <div class="checklist">
+                <ul>
+                    <li><strong>查詢路線</strong>：使用 Naver Map 或 Kakao Map (輸入目的地 → 選擇大眾運輸)。</li>
+                    <li><strong>付費方式</strong>：T-money 卡 (便利商店買) 或 WOWPASS。<strong>上下車都要刷卡！</strong></li>
+                </ul>
+            </div>
 
-        <h3>🛍 如何購買專用垃圾袋？</h3>
-        <p>一般垃圾（白色袋子）和食物垃圾袋需要在<strong>便利商店 (GS25, CU, 7-11)</strong> 或 <strong>超市</strong> 購買。</p>
-        
-        <div class="phrase-box">
-            <p>💡 <strong>給店員看這句 (或跟著唸)：</strong></p>
-            <span style="font-size: 1.4em; font-weight: bold; color: var(--primary-blue);">20 리터 종량제 봉투 주세요.</span>
-            <p style="color: #666; font-size: 0.9em; margin-top: 5px;">(i-ship-li-teo jong-nyang-je bong-tu ju-se-yo)</p>
-            <p><strong>中文意思：</strong>請給我 20 公升的專用垃圾袋。</p>
-        </div>
+            <div class="info-card" style="background-color: #f9f9f9;">
+                <h3 style="margin-top:0;">🧭 搭乘步驟</h3>
+                <div class="step-box">1. 在站牌確認公車號碼 (站名多為韓文)</div>
+                <div class="step-box">2. 上車刷卡 (嗶一聲)</div>
+                <div class="step-box">3. 留意車內顯示或 App 導航</div>
+                <div class="step-box">4. 按下車鈴，下車前「再刷一次卡」</div>
+            </div>
 
-        <div class="info-card" style="background-color: #f0f8ff;">
-            <strong>容量建議：</strong>
-            <ul>
-                <li><strong>10L</strong>：適合 1 人短住。</li>
-                <li><strong>20L</strong>：最普遍，最多人買。</li>
-                <li><strong>50L</strong>：適合多人合住或大掃除。</li>
-            </ul>
-        </div>
+            <p style="font-size: 0.9em; color: #666; margin-top: 15px;">
+                ⚠️ 小提醒：濟州公車班距較長 (20-40分鐘)，趕時間建議搭計程車。忘記下車刷卡可能會被收較高費用。
+            </p>
+        </section>
 
-        <div class="card-container">
-            <figure class="info-card">
-                <img src="11.jpeg" alt="濟州專用垃圾袋實物照片">
-                <figcaption>認明這種白色的專用垃圾袋</figcaption>
-            </figure>
-            <figure class="info-card">
-                <img src="12.jpeg" alt="垃圾袋參考價格表">
-                <figcaption>各容量垃圾袋參考價格 (韓元)</figcaption>
-            </figure>
-        </div>
-    </section>
+        <section>
+            <h2>🚗 濟州租車快速教學</h2>
+            <p>在濟州島，租車是最自由的方式。對外國同事而言，選擇流程清楚、英文友善的公司最重要。</p>
 
-    <footer style="text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.8em; color: #999;">
-        <p>Living in Jeju - Quick Start Guide</p>
-    </footer>
+            <div class="info-card" style="border-left: 8px solid #d32f2f;">
+                <h3 style="margin-top:0; color: #d32f2f;">⭐ 推薦：Lotte Rent A Car (樂天租車)</h3>
+                <p>韓國大型連鎖，車況新，有英文介面，機場有接駁車。</p>
+                <div style="text-align: right;">
+                    <a href="https://m.lotterentacar.net/hp/chn/reservation/index.do?areaFlag=6" target="_blank" class="btn-link">前往樂天租車官網</a>
+                </div>
+            </div>
 
-    <script>
-    function openNaverMap(e, placeId, webUrl) {
-        e.preventDefault(); // 阻止直接打開網頁
+            <h3>🪪 必備文件 (缺一不可)</h3>
+            <div class="checklist">
+                <ul>
+                    <li><strong>護照</strong> (Passport)</li>
+                    <li><strong>本國有效駕照</strong></li>
+                    <li><strong>國際駕照 (IDP)</strong> (⚠️ 沒有這個無法租車)</li>
+                    <li><strong>信用卡</strong> (部分方案需要)</li>
+                </ul>
+            </div>
 
-        // 使用 Naver Map 的 Place URI Scheme (支援 iOS/Android)
-        // 格式: nmap://place?id={PlaceID}
-        var appUrl = "nmap://place?id=" + placeId + "&appname=JejuGuide";
+            <h3>🚘 租車流程</h3>
+            <div class="agent-grid">
+                <div class="step-box">1. 線上預約 (建議提前)</div>
+                <div class="step-box">2. 抵達濟州機場，搭接駁車</div>
+                <div class="step-box">3. 櫃檯出示證件、確認保險</div>
+                <div class="step-box">4. 檢查車況 (建議拍照錄影)</div>
+            </div>
 
-        // 記錄當下時間
-        var start = new Date().getTime();
+            <div class="highlight-box" style="margin-top: 25px;">
+                <h3 style="margin-top:0;">🧭 導航使用秘訣</h3>
+                <p>韓國開車不建議用 Google Maps！車內導航通常很準確。</p>
+                <p><strong>👉 輸入「電話號碼」導航最快！</strong><br>
+                在車載導航輸入店家的電話，比輸入地址更精準方便。</p>
+            </div>
 
-        // 嘗試打開 App
-        window.location.href = appUrl;
+            <div class="warning-box" style="margin-top: 20px;">
+                <strong>⚠️ 開車注意：</strong>
+                <ul>
+                    <li>韓國是左駕、右行 (與台灣相同)。</li>
+                    <li>限速非常嚴格，測速照相很多。</li>
+                    <li>絕對禁止酒駕，違規罰單會由租車人負擔。</li>
+                </ul>
+            </div>
+        </section>
+    </div>
 
-        // 設定一個計時器 (500毫秒)
-        // 如果 App 成功打開，瀏覽器會進入背景，計時器會暫停
-        // 如果 App 沒打開，計時器時間到就會執行 -> 跳轉去網頁版
-        setTimeout(function() {
-            var end = new Date().getTime();
-            if (end - start < 1500) { // 判斷是否還留在目前頁面
-                window.location.href = webUrl; // 打不開 App，改去網頁版
-            }
-        }, 500);
-    }
-    </script>
 </body>
-
 </html>
