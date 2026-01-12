@@ -17,7 +17,7 @@
             --warning-bg: #fff3cd;
             --danger-bg: #ffebee;
             --danger-border: #ef5350;
-            --highlight-border: #ff9800; /* 新增退宿提醒的顏色 */
+            --highlight-border: #ff9800;
             --highlight-bg: #fff3e0;
         }
 
@@ -25,28 +25,119 @@
             box-sizing: border-box;
         }
 
+        html {
+            /* 讓點擊連結時有滑順的捲動效果 */
+            scroll-behavior: smooth;
+            /* 避免錨點跳轉時被頂部選單遮擋 (如果有的話)，預留一點緩衝 */
+            scroll-padding-top: 20px;
+        }
+
         body {
             font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f2f5; /* 網頁背景色 */
+            background-color: #f0f2f5;
             color: #333;
-            /* 字體放大設定：基礎字體設為 20px (原本約 16px) */
             font-size: 20px; 
             line-height: 1.6;
         }
 
+        /* --- 導覽選單樣式 (新增) --- */
+        .nav-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            padding: 10px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .nav-details {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-summary {
+            list-style: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 30px;
+            transition: background 0.3s;
+        }
+
+        .nav-summary:hover {
+            background: #bbdefb;
+        }
+
+        .nav-summary::after {
+            content: '▼';
+            font-size: 0.8em;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+
+        details[open] .nav-summary::after {
+            transform: rotate(180deg);
+        }
+
+        /* 隱藏預設的三角形 */
+        .nav-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .nav-list {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            border-left: 4px solid transparent;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-link:hover {
+            background-color: #e3f2fd;
+            border-left-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
         /* --- 一頁式容器設定 --- */
         .main-container {
-            max-width: 900px; /* 限制最大寬度，電腦版看比較舒服 */
+            max-width: 900px;
             margin: 0 auto;
             background: white;
-            padding: 40px 30px;
+            padding: 20px 30px 40px 30px; /* 上方 padding 減少，因為有導覽列 */
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             min-height: 100vh;
         }
 
-        /* --- 標題樣式 (配合字體放大) --- */
+        /* --- 標題樣式 --- */
         h1 { font-size: 2.2em; margin-bottom: 0.2em; }
         h2 {
             color: var(--primary-blue);
@@ -64,9 +155,7 @@
             font-weight: 700;
         }
 
-        p, li {
-            margin-bottom: 10px;
-        }
+        p, li { margin-bottom: 10px; }
 
         /* --- Header --- */
         .header-hero {
@@ -88,8 +177,6 @@
         }
 
         /* --- 元件樣式 --- */
-        
-        /* Checklist */
         .checklist ul { list-style: none; padding-left: 0; }
         .checklist li { position: relative; padding-left: 35px; margin-bottom: 12px; }
         .checklist li::before { 
@@ -101,13 +188,12 @@
             font-size: 1.2em;
         }
 
-        /* 卡片與容器 */
         .card-container {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
-        .card-container.half > div { flex: 1; min-width: 300px; } /* 手機版自動換行 */
+        .card-container.half > div { flex: 1; min-width: 300px; }
 
         .info-card {
             background: white;
@@ -142,7 +228,6 @@
             margin-bottom: 20px;
         }
 
-        /* 新增：退宿提醒專用樣式 */
         .checkout-box {
             background-color: var(--highlight-bg);
             padding: 25px;
@@ -159,7 +244,6 @@
             margin-top: 0;
         }
 
-        /* 按鈕 */
         .btn-link {
             display: inline-block;
             background-color: var(--primary-blue);
@@ -175,7 +259,6 @@
         }
         .btn-link:hover { transform: scale(1.05); }
 
-        /* 圖片處理 */
         .img-container { text-align: center; margin: 20px 0; }
         .img-container img { 
             max-width: 100%; 
@@ -184,24 +267,19 @@
         }
         
         .mobile-screenshot {
-            max-height: 550px; /* 稍微放大 */
+            max-height: 550px;
             width: auto;
             object-fit: contain;
         }
 
-        .landscape-img {
-            width: 100%;
-            height: auto;
-        }
+        .landscape-img { width: 100%; height: auto; }
 
-        /* 房仲 Grid */
         .agent-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 自動適應寬度 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
-        /* 步驟方塊 */
         .step-box {
             background: #fff;
             border-left: 5px solid var(--primary-blue);
@@ -210,7 +288,6 @@
             font-weight: 500;
         }
 
-        /* 表格樣式 */
         .custom-table {
             width: 100%;
             border-collapse: collapse;
@@ -218,7 +295,7 @@
         }
         .custom-table th, .custom-table td {
             border: 1px solid #ddd;
-            padding: 15px; /* 表格內距加大 */
+            padding: 15px;
             text-align: left;
         }
         .custom-table th {
@@ -226,21 +303,43 @@
             color: var(--text-dark);
             font-weight: bold;
         }
-        .custom-table tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+        .custom-table tr:nth-child(even) { background-color: #f9f9f9; }
 
-        /* 手機版優化 */
         @media (max-width: 600px) {
-            body { font-size: 18px; } /* 手機版字稍微縮一點點但還是要大 */
+            body { font-size: 18px; }
             .main-container { padding: 20px 15px; width: 100%; }
             h1 { font-size: 1.8em; }
             h2 { font-size: 1.4em; }
             .card-container.half { flex-direction: column; }
+            .nav-list { grid-template-columns: 1fr; } /* 手機版選單變單欄 */
         }
     </style>
 </head>
 <body>
+
+    <div class="nav-container">
+        <details class="nav-details">
+            <summary class="nav-summary">📖 快速導覽 (點擊開啟目錄)</summary>
+            <div class="nav-list">
+                <a href="#prep" class="nav-link">🚀 行前準備</a>
+                <a href="#esim" class="nav-link">📱 手機 eSIM 申辦</a>
+                <a href="#sim-offline" class="nav-link">🏥 實體 SIM 卡 (通訊行)</a>
+                <a href="#wowpass" class="nav-link">💳 WOWPASS 理財</a>
+                <a href="#shopping" class="nav-link">🛒 日常生活採買</a>
+                <a href="#housing" class="nav-link">🏠 住宿與租屋聯絡人</a>
+                <a href="#checkout" class="nav-link">👋 宿舍退宿提醒</a>
+                <a href="#trash" class="nav-link">♻️ 垃圾分類指南</a>
+                <a href="#trash-bag" class="nav-link">🛍 購買專用垃圾袋</a>
+                <a href="#location" class="nav-link">📍 地點距離概覽</a>
+                <a href="#dorm-rules" class="nav-link">🚫 宿舍入住必讀</a>
+                <a href="#medical" class="nav-link">🤧 醫療與感冒指南</a>
+                <a href="#heating" class="nav-link">🔥 地暖與熱水教學</a>
+                <a href="#taxi" class="nav-link">🚕 搭計程車 (Taxi)</a>
+                <a href="#bus" class="nav-link">🚌 搭巴士 (Bus)</a>
+                <a href="#car" class="nav-link">🚗 租車教學</a>
+            </div>
+        </details>
+    </div>
 
     <div class="main-container">
         <header class="header-hero">
@@ -252,7 +351,7 @@
         </header>
 
         <section>
-            <h2>🚀 行前準備</h2>
+            <h2 id="prep">🚀 行前準備</h2>
             <div class="checklist">
                 <ul>
                     <li><strong>準備韓元現金</strong>：銀行帳戶無法立即開通，建議初期攜帶足夠的現金以支付生活開銷。</li>
@@ -265,7 +364,7 @@
         </section>
 
         <section>
-            <h2>📱 手機 SIM 卡申辦</h2>
+            <h2 id="esim">📱 手機 SIM 卡申辦</h2>
             <div class="highlight-box">
                 <h3>💡 推薦方式：線上購買 eSIM</h3>
                 <p>若您的手機支援 eSIM，建議可直接在 Trip.com 等網站購買，掃碼即用。</p>
@@ -281,7 +380,7 @@
         </section>
 
         <section>
-            <h2>🏥 實體通訊行 (持護照辦理)</h2>
+            <h2 id="sim-offline">🏥 實體通訊行 (持護照辦理)</h2>
             <p>若需要實體卡，這間通訊社可以登記辦預付卡，有會中文的職員協助。</p>
             <div class="info-card" style="border-left: 8px solid #17a2b8; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
                 <span><strong>推薦地點：</strong></span>
@@ -305,7 +404,7 @@
         </section>
 
         <section>
-            <h2>💳 WOWPASS：你的初期理財幫手</h2>
+            <h2 id="wowpass">💳 WOWPASS：你的初期理財幫手</h2>
             <div class="card-container half">
                 <div class="info-card">
                     <h3>它是什麼？</h3>
@@ -331,7 +430,7 @@
         </section>
 
         <section>
-            <h2>🛒 日常生活採買</h2>
+            <h2 id="shopping">🛒 日常生活採買</h2>
             <div class="card-container half">
                 <div class="info-card">
                     <h3 style="margin-top:0;">Daiso (大創)</h3>
@@ -345,7 +444,7 @@
         </section>
 
         <section>
-            <h2>🏠 住宿與租屋聯絡人</h2>
+            <h2 id="housing">🏠 住宿與租屋聯絡人</h2>
             <p>以下是常用的房屋仲介與相關聯絡人資訊 (截圖來源：手機通訊錄/WeChat)：</p>
 
             <div class="agent-grid">
@@ -387,7 +486,7 @@
                 <p>電話: <strong>010-3106-2460</strong> <span style="color: #d32f2f; margin-left: 10px;">⚠️ 注意：這位只能用韓語溝通</span></p>
             </div>
 
-            <div class="checkout-box">
+            <div class="checkout-box" id="checkout">
                 <h3>🏠 宿舍退宿前整理小提醒</h3>
                 <p>為了讓下一位同事能舒適入住，退宿前請協助完成以下簡單整理事項：</p>
                 <div class="checklist">
@@ -410,10 +509,10 @@
                     請將宿舍整理至「可供下一位住戶正常使用」的狀態。<br>謝謝您的配合與體諒！
                 </p>
             </div>
-            </section>
+        </section>
 
         <section>
-            <h2>♻️ 垃圾分類與丟棄指南</h2>
+            <h2 id="trash">♻️ 垃圾分類與丟棄指南</h2>
             <div class="warning-box">
                 <p><strong>這在濟州非常重要！</strong></p>
                 <ol style="margin-bottom:0;">
@@ -439,7 +538,7 @@
         </section>
 
         <section>
-            <h2>🛍 如何購買專用垃圾袋？</h2>
+            <h2 id="trash-bag">🛍 如何購買專用垃圾袋？</h2>
             <p>一般垃圾（白色袋子）和食物垃圾袋需要在 <strong>便利商店 (GS25, CU, 7-11)</strong> 或 <strong>超市</strong> 購買。</p>
             
             <div class="highlight-box" style="text-align: center; border: 3px dashed var(--primary-blue); background: #fdfdfd;">
@@ -474,7 +573,7 @@
         </section>
 
         <section>
-            <h2>📍 主要地點與距離概覽</h2>
+            <h2 id="location">📍 主要地點與距離概覽</h2>
             <table class="custom-table">
                 <thead>
                     <tr>
@@ -529,7 +628,7 @@
         </section>
 
         <section style="margin-top: 40px;">
-            <h2>🏠 宿舍入住必讀 (嚴格執行)</h2>
+            <h2 id="dorm-rules">🏠 宿舍入住必讀 (嚴格執行)</h2>
             <div class="danger-box">
                 <h3 style="color: #c62828; margin-top: 0;">🚫 禁菸及禁止攜帶寵物</h3>
                 <ul>
@@ -548,7 +647,7 @@
         </section>
 
         <section>
-            <h2>🤧 醫療與感冒指南</h2>
+            <h2 id="medical">🤧 醫療與感冒指南</h2>
             <div class="info-card">
                 <h3>給外國同事的小提醒</h3>
                 <ul>
@@ -598,7 +697,7 @@
         </section>
 
         <section>
-            <h2>🔥 地暖與熱水系統快速教學</h2>
+            <h2 id="heating">🔥 地暖與熱水系統快速教學</h2>
             <p>韓國住宅的地暖 (온돌) 與熱水 (온수) 通常由同一個面板操作。冬天主要用地暖，日常洗澡則使用熱水模式。</p>
             
             <div class="img-container">
@@ -644,7 +743,7 @@
         </section>
 
         <section>
-            <h2>🚕 在濟州搭計程車 (Taxi)</h2>
+            <h2 id="taxi">🚕 在濟州搭計程車 (Taxi)</h2>
             <p>濟州計程車方便便宜。大多數司機英文有限，建議使用 App 或直接出示韓文地址。</p>
 
             <div class="highlight-box">
@@ -673,7 +772,7 @@
         <hr style="border: 0; border-top: 2px dashed #ccc; margin: 40px 0;">
 
         <section>
-            <h2>🚌 在濟州搭巴士 (Bus)</h2>
+            <h2 id="bus">🚌 在濟州搭巴士 (Bus)</h2>
             <div class="checklist">
                 <ul>
                     <li><strong>查詢路線</strong>：使用 Naver Map 或 Kakao Map (輸入目的地 → 選擇大眾運輸)。</li>
@@ -695,7 +794,7 @@
         </section>
 
         <section>
-            <h2>🚗 濟州租車快速教學</h2>
+            <h2 id="car">🚗 濟州租車快速教學</h2>
             <p>在濟州島，租車是最自由的方式。對外國同事而言，選擇流程清楚、英文友善的公司最重要。</p>
 
             <div class="info-card" style="border-left: 8px solid #d32f2f;">
