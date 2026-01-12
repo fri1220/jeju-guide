@@ -28,8 +28,8 @@
         html {
             /* 讓點擊連結時有滑順的捲動效果 */
             scroll-behavior: smooth;
-            /* 避免錨點跳轉時被頂部選單遮擋 (如果有的話)，預留一點緩衝 */
-            scroll-padding-top: 20px;
+            /* 避免錨點跳轉時被頂部選單遮擋 */
+            scroll-padding-top: 70px; /* 稍微加大一點，避免標題被選單蓋住 */
         }
 
         body {
@@ -42,7 +42,7 @@
             line-height: 1.6;
         }
 
-        /* --- 導覽選單樣式 (新增) --- */
+        /* --- 導覽選單樣式 --- */
         .nav-container {
             position: sticky;
             top: 0;
@@ -105,12 +105,14 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 10px;
+            max-height: 80vh; /* 防止選單太長超出螢幕 */
+            overflow-y: auto;
         }
 
         .nav-link {
             text-decoration: none;
             color: var(--text-dark);
-            padding: 8px 12px;
+            padding: 12px; /* 稍微加大點擊範圍 */
             border-radius: 5px;
             background-color: #f8f9fa;
             border-left: 4px solid transparent;
@@ -119,9 +121,10 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: block; /* 確保整塊都能點 */
         }
 
-        .nav-link:hover {
+        .nav-link:hover, .nav-link:active {
             background-color: #e3f2fd;
             border-left-color: var(--primary-blue);
             color: var(--primary-blue);
@@ -132,7 +135,7 @@
             max-width: 900px;
             margin: 0 auto;
             background: white;
-            padding: 20px 30px 40px 30px; /* 上方 padding 減少，因為有導覽列 */
+            padding: 20px 30px 40px 30px;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             min-height: 100vh;
         }
@@ -840,6 +843,14 @@
             </div>
         </section>
     </div>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-details').removeAttribute('open');
+            });
+        });
+    </script>
 
 </body>
 </html>
